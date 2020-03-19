@@ -121,15 +121,18 @@ function tripletCombination()
 flips=0
 }
 
-singletCombination
-echo "------------------------------------"
-echo H" "T
-echo ${combinations["H"]} ${combinations["T"]}
-echo "------------------------------------"
-doubletCombination
-echo HH HT TH TT
-echo ${combinations["HH"]}"  "${combinations["HT"]} " "${combinations["TH"]}" "${combinations["TT"]}
-echo "------------------------------------"
-tripletCombination
-echo HHH HHT HTH HTT THH THT TTH TTT
-echo ${combinations["HHH"]}"    "${combinations["HHT"]}"   "${combinations["HTH"]}"   "${combinations["HTT"]}"   "${combinations["THH"]}"  "${combinations["THT"]}"   "${combinations["TTH"]}"   " ${combinations["TTT"]}
+function showResult()
+{
+	singletCombination
+	echo H " "T
+	echo ${combinations["H"]} ${combinations["T"]}
+	echo "----------------------------------"
+	doubletCombination
+	echo HH HT TH TT
+	echo ${combinations["HH"]} " "${combinations["HT"]}" " ${combinations["TH"]}"" ${combinations["TT"]}
+	echo "---------------------------------"
+	tripletCombination
+	echo HHH HHT HTH HTT THH THT TTH TTT
+	echo ${combinations["HHH"]} "  "${combinations["HHT"]}"  " ${combinations["HTH"]} "  "${combinations["HTT"]}"   " ${combinations["THH"]}"   "${combinations["THT"]} "  "${combinations["TTH"]}"  "${combinations["TTT"]}
+}
+showResult

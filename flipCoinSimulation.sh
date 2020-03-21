@@ -8,10 +8,10 @@
 declare -A combinations
 
 combinations=(["H"]=0 ["T"]=0 ["HH"]=0 ["HT"]=0 ["TT"]=0 ["TH"]=0 ["HHH"]=0 ["HHT"]=0 ["HTT"]=0 ["HTH"]=0 ["THH"]=0 ["THT"]=0 ["TTH"]=0 ["TTT"]=0)
-
-noOfFlips=30
+#Variables
 coinOutput=O
 flips=0
+temp=0
 
 function headOrTail()
 {
@@ -120,19 +120,53 @@ function tripletCombination()
 
 flips=0
 }
+function findMaxOutput(){
+	maxOutcomes=$1
+	maxOutput=$2
+   for k in ${!combinations[@]}
+   do
+      if [[ $maxOutcomes -lt ${combinations["$k"]} ]]
+      then
+         maxOutcomes=${combinations["$k"]}
+         maxOutput=$k
+      fi
+   done
+   echo "Maximum Occurances are $maxOutcomes --> $maxOutput"
 
-function showResult()
-{
-	singletCombination
-	echo H " "T
-	echo ${combinations["H"]} ${combinations["T"]}
-	echo "----------------------------------"
-	doubletCombination
-	echo HH HT TH TT
-	echo ${combinations["HH"]} " "${combinations["HT"]}" " ${combinations["TH"]}"" ${combinations["TT"]}
-	echo "---------------------------------"
-	tripletCombination
-	echo HHH HHT HTH HTT THH THT TTH TTT
-	echo ${combinations["HHH"]} "  "${combinations["HHT"]}"  " ${combinations["HTH"]} "  "${combinations["HTT"]}"   " ${combinations["THH"]}"   "${combinations["THT"]} "  "${combinations["TTH"]}"  "${combinations["TTT"]}
 }
-showResult
+
+function getCombination () 
+{
+while [[ $temp -eq 0 ]]
+do
+read -p "Enter the number of flips ::" noOfFlips
+read -p "Enter your choice ::" choice
+case $choice in
+	1 )
+		headOrTail
+		singletCombination
+		echo H " "T
+		echo ${combinations["H"]} ${combinations["T"]}
+		echo "$headPercentage"  "$tailPercentage"
+		findMaxOutput 0 0 ;;
+	2 )
+		headOrTail
+		doubletCombination
+		echo HH HT TH TT
+		echo ${combinations["HH"]} " "${combinations["HT"]}" " ${combinations["TH"]}"" ${combinations["TT"]}
+		echo "$HHpercentage" "$HTpercentage" "$THpercentage" "$TTpercentage" 
+		findMaxOutput 0 0 ;;
+	3 )
+		headOrTail
+		tripletCombination
+		echo HHH HHT HTH HTT THH THT TTH TTT
+		echo ${combinations["HHH"]} "  "${combinations["HHT"]}"  " ${combinations["HTH"]} "  "${combinations["HTT"]}"   " ${combinations["THH"]}"   "${combinations["THT"]} "  "${combinations["TTH"]}"  "${combinations["TTT"]}
+		echo "$HHHpercentage" "$HHTpercentage" "$HTHpercentage" "$HTTpercentage" "$THHpercentage" "$THTpercentage" "$TTHpercentage" "$TTTpercentage"
+		findMaxOutput 0 0 ;;
+	4 )
+		temp=1 ;;
+
+esac
+done
+}
+getCombination
